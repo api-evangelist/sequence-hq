@@ -1,0 +1,91 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Sequence
+providerId: sequence-hq
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Billing
+- Usage-Based Billing
+- Revenue Recognition
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Sequence spend. Sequence is a SaaS platform billed as a monthly
+  platform fee that scales with your projected billed revenue and the feature
+  set you enable (Growth / Core / Scale), not as a per-API-call charge. The
+  dominant cost driver is the platform subscription tier; optional add-ons
+  (quote builder, custom reporting, revenue recognition) and professional
+  services (onboarding, migration) can add to spend. Because Sequence is itself a
+  billing and metering system, it also produces the usage, invoice, and revenue
+  data other FinOps practices depend on downstream.
+notes: >-
+  Sequence's own tier fees beyond the published Growth price are bespoke and not
+  reconciled here. This artifact models Sequence-as-a-vendor cost; verify tier
+  fees and add-on pricing on https://www.sequencehq.com/pricing.
+sources:
+- https://www.sequencehq.com/pricing
+- https://www.sequencehq.com/
+- https://docs.sequencehq.com/reference/gettingStarted
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Sequence
+serviceCategory: Financial Operations and Billing
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Sequence
+  ServiceCategory: Financial Operations and Billing
+  ProviderName: Sequence
+  PublisherName: Sequence
+  InvoiceIssuerName: Sequence
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: platform_fee
+  description: Monthly platform subscription fee, scaled by tier (Growth / Core / Scale) and projected billed revenue.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: add_ons
+  description: Optional add-on modules such as quote builder, custom reporting, and revenue recognition.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - module
+- name: professional_services
+  description: One-time or recurring services such as onboarding, migration, and dedicated engineer support (Scale).
+  unit: engagement
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track the Sequence platform tier and enabled add-ons as a fixed monthly line item; review it against the projected billed revenue the fee was priced on.
+- name: Allocation
+  description: Attribute the Sequence subscription to the finance/revenue-operations cost center it serves, and use Sequence's own usage/invoice data to allocate customer revenue downstream.
+- name: Optimization
+  description: Right-size the tier to actual billed revenue and only enable add-ons in use; consolidate quoting, metering, invoicing, and revenue recognition onto one platform to avoid overlapping point tools.
+- name: Accountability
+  description: Assign a finance owner to review the tier annually as billed revenue grows and tiers change, and to confirm add-ons remain justified.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

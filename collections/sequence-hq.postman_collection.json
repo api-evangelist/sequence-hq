@@ -1,0 +1,178 @@
+{
+  "info": {
+    "name": "Sequence API",
+    "description": "Programmatic access to Sequence usage-based billing, pricing, and revenue orchestration - customers, usage events and metrics, billing schedules, invoices and credit notes, products and prices, and quotes. Production base URL: https://eu.sequencehq.com (Sandbox: https://sandbox.sequencehq.com). Authentication is HTTP Basic auth with your Client ID (username) and Client Secret (password). Confirmed endpoints against the live docs: GET /customers, POST /api/usage-events, GET /billing-schedules, GET /invoices, GET /products. Other requests are modeled from the documented operation index; verify payloads against docs.sequencehq.com.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{clientId}}", "type": "string" },
+      { "key": "password", "value": "{{clientSecret}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://eu.sequencehq.com", "type": "string" },
+    { "key": "clientId", "value": "", "type": "string" },
+    { "key": "clientSecret", "value": "", "type": "string" },
+    { "key": "sequenceVersion", "value": "2024-07-30", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "List customers (confirmed)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "sequence-version", "value": "{{sequenceVersion}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers?limit=20&sortOrder=DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers"],
+              "query": [
+                { "key": "limit", "value": "20" },
+                { "key": "sortOrder", "value": "DESC" }
+              ]
+            },
+            "description": "Lists customers with filtering, sorting, and cursor pagination. Confirmed against the live Sequence API reference."
+          }
+        },
+        {
+          "name": "Create a customer (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "sequence-version", "value": "{{sequenceVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"legalName\": \"Acme, Inc.\",\n  \"email\": \"billing@acme.example\",\n  \"aliases\": [\"acme-prod\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/customers", "host": ["{{baseUrl}}"], "path": ["customers"] },
+            "description": "Creates a customer. Payload modeled from the documented operation."
+          }
+        },
+        {
+          "name": "Get a customer (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/customers/:id", "host": ["{{baseUrl}}"], "path": ["customers", ":id"], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieves a customer by ID. Path/payload modeled."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usage & Metering",
+      "item": [
+        {
+          "name": "Create a usage event (confirmed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "sequence-version", "value": "{{sequenceVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"customerAlias\": \"acme-prod\",\n  \"eventType\": \"api_call\",\n  \"customerEventId\": \"evt-0001\",\n  \"eventTimestamp\": \"2026-07-12T12:00:00Z\",\n  \"eventProperties\": {\n    \"quantity\": 1\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/usage-events", "host": ["{{baseUrl}}"], "path": ["api", "usage-events"] },
+            "description": "Ingests a usage event attributed via customerAlias and classified by eventType. Confirmed host and path; higher separate rate limit applies."
+          }
+        },
+        {
+          "name": "List usage metrics (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/usage-metrics", "host": ["{{baseUrl}}"], "path": ["usage-metrics"] },
+            "description": "Lists usage metrics. Path/payload modeled from the documented operation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Billing Schedules",
+      "item": [
+        {
+          "name": "List billing schedules (confirmed)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/billing-schedules", "host": ["{{baseUrl}}"], "path": ["billing-schedules"] },
+            "description": "Lists billing schedules. Confirmed host and path."
+          }
+        },
+        {
+          "name": "Get a billing schedule (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/billing-schedules/:id", "host": ["{{baseUrl}}"], "path": ["billing-schedules", ":id"], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieves a billing schedule by ID. Path/payload modeled."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices & Credit Notes",
+      "item": [
+        {
+          "name": "List invoices (confirmed)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/invoices", "host": ["{{baseUrl}}"], "path": ["invoices"] },
+            "description": "Lists invoices. Confirmed host and path."
+          }
+        },
+        {
+          "name": "Finalize an invoice (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/invoices/:id/finalize", "host": ["{{baseUrl}}"], "path": ["invoices", ":id", "finalize"], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Finalizes a draft invoice. Path modeled from the documented 'Finalize invoice' operation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products & Prices",
+      "item": [
+        {
+          "name": "List products (confirmed)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/products", "host": ["{{baseUrl}}"], "path": ["products"] },
+            "description": "Lists products. Confirmed host and path."
+          }
+        },
+        {
+          "name": "List prices (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/prices", "host": ["{{baseUrl}}"], "path": ["prices"] },
+            "description": "Lists prices. Path/payload modeled from the documented operation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quotes",
+      "item": [
+        {
+          "name": "List quotes (modeled)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "sequence-version", "value": "{{sequenceVersion}}" }],
+            "url": { "raw": "{{baseUrl}}/quotes", "host": ["{{baseUrl}}"], "path": ["quotes"] },
+            "description": "Lists quotes. Path/payload modeled from the documented operation."
+          }
+        }
+      ]
+    }
+  ]
+}

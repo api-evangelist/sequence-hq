@@ -1,0 +1,188 @@
+aid: sequence-hq
+url: https://raw.githubusercontent.com/api-evangelist/sequence-hq/refs/heads/main/apis.yml
+name: Sequence
+kind: company
+description: Sequence is a usage-based billing, pricing, and revenue orchestration
+  platform for B2B SaaS and other recurring-revenue businesses. It turns product
+  usage and negotiated contract terms into automated billing schedules, invoices,
+  credit notes, and quotes, backed by a metering engine for usage events and usage
+  metrics, plus revenue recognition and integrations to ERP/CRM, tax, and payment
+  providers. The REST API (production base https://eu.sequencehq.com) uses HTTP
+  Basic authentication with a Client ID and Client Secret, date-based API
+  versioning (for example sequence-version 2024-07-30), and signed webhooks for
+  event notifications. A Sandbox environment (https://sandbox.sequencehq.com)
+  mirrors production for testing.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Billing
+- Usage-Based Billing
+- Revenue Recognition
+- Metering
+- Invoicing
+- Pricing
+- Revenue Orchestration
+- FinOps
+created: '2026-07-12'
+modified: '2026-07-12'
+specificationVersion: '0.19'
+apis:
+- aid: sequence-hq:sequence-hq-customers-api
+  name: Sequence Customers API
+  tags:
+  - Customers
+  - Contacts
+  - Billing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/gettingStarted
+    type: Documentation
+  - url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: Create, retrieve, update, archive, and list customers, along with
+    their contacts, customer aliases (external IDs used to attribute usage), and
+    customer organizations. Customers are the billable entities that billing
+    schedules, invoices, and usage events attach to.
+- aid: sequence-hq:sequence-hq-usage-metering-api
+  name: Sequence Usage & Metering API
+  tags:
+  - Usage-Based Billing
+  - Metering
+  - Events
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: Ingest usage events (POST /api/usage-events, rate-limited separately
+    at a higher ceiling) keyed by customerAlias and eventType, define and manage
+    usage metrics that aggregate those events, calculate a metric for a customer
+    over a timeframe, and manage seat metrics and seat events for seat-based
+    billing. This is the metering foundation for usage-based pricing.
+- aid: sequence-hq:sequence-hq-billing-schedules-api
+  name: Sequence Billing Schedules API
+  tags:
+  - Billing
+  - Subscriptions
+  - Contracts
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: Create, activate, archive, duplicate, retrieve, update, and list
+    billing schedules - the recurring contract terms that translate a customer's
+    negotiated pricing into automatically generated invoices over time. Includes
+    tax validation on a billing schedule.
+- aid: sequence-hq:sequence-hq-invoices-credit-notes-api
+  name: Sequence Invoices & Credit Notes API
+  tags:
+  - Invoicing
+  - Credit Notes
+  - Accounts Receivable
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: Manage the accounts-receivable lifecycle - create, retrieve, update,
+    patch, finalize, send, void, and delete invoices, manage line items and line
+    item groups, download invoice PDFs, and issue credit notes against invoices.
+    Covers draft-to-sent transitions, payment reminders, and payment status
+    updates.
+- aid: sequence-hq:sequence-hq-products-prices-api
+  name: Sequence Products & Prices API
+  tags:
+  - Pricing
+  - Products
+  - Catalog
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: Manage the product and pricing catalog - create, retrieve, update,
+    and archive products; create, retrieve, update, and delete prices; and manage
+    reusable list prices. Pricing models support flat, per-unit, tiered, and
+    usage-based structures that feed billing schedules and quotes.
+- aid: sequence-hq:sequence-hq-quotes-api
+  name: Sequence Quotes API
+  tags:
+  - Quotes
+  - CPQ
+  - Revenue Orchestration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+  baseURL: https://eu.sequencehq.com
+  properties:
+  - url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+    type: APIReference
+  - url: openapi/sequence-hq-openapi.yml
+    type: OpenAPI
+  - url: collections/sequence-hq.postman_collection.json
+    type: PostmanCollection
+  - url: collections/sequence-hq.opencollection.json
+    type: OpenCollection
+  description: List quotes, retrieve quote analytics, and download quote PDFs.
+    Quotes capture negotiated deal terms (products, prices, discounts) that, once
+    signed and accepted, convert into billing schedules - the quote-to-revenue
+    path for sales-led usage-based businesses.
+common:
+- type: DomainSecurity
+  url: security/sequence-hq-domain-security.yml
+- type: Authentication
+  url: authentication/sequence-hq-authentication.yml
+- type: GitHubOrganization
+  url: https://github.com/sequencehq
+- type: LinkedIn
+  url: https://www.linkedin.com/company/sequence-hq
+- type: Website
+  url: https://www.sequencehq.com
+- type: Documentation
+  url: https://docs.sequencehq.com
+- type: Plans
+  url: plans/sequence-hq-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/sequence-hq-rate-limits.yml
+- type: FinOps
+  url: finops/sequence-hq-finops.yml
+- url: https://www.sequencehq.com/blog
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

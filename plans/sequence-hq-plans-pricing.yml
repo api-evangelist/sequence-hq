@@ -1,0 +1,116 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Sequence
+providerId: sequence-hq
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Billing
+- Usage-Based Billing
+- Revenue Orchestration
+- Pricing
+- Plans
+description: >-
+  Sequence is sold as a SaaS platform priced by a monthly platform fee that
+  scales with projected billed revenue and the feature set you need, rather than
+  by API call volume. As published on the pricing page there are three tiers -
+  Growth (a fixed published monthly fee for early-stage companies under ~$1M
+  annual revenue), Core (bespoke pricing for ~$1-10M annual revenue), and Scale
+  (bespoke pricing for $10M+ annual revenue). Quote builder, custom reporting,
+  and revenue recognition are optional add-ons on the higher tiers. The API is
+  included with the platform subscription; there is no separate per-request API
+  price. Exact figures beyond the published Growth fee are not reconciled here.
+notes: >-
+  The Growth monthly fee (~$799/month at time of review) and the "monthly
+  platform fee based on projected billed revenue" model are taken from the
+  public pricing page; Core and Scale are bespoke. A free trial is referenced in
+  the pricing FAQ. Verify current tiers, fees, and add-ons on
+  https://www.sequencehq.com/pricing during reconciliation.
+sources:
+- https://www.sequencehq.com/pricing
+- https://www.sequencehq.com/
+- https://docs.sequencehq.com/reference/gettingStarted
+plans:
+- id: sequence-growth
+  name: Growth
+  type: flat
+  description: >-
+    Published monthly platform fee for startups (roughly under $1M annual
+    revenue). Includes native invoicing, usage metering, advanced pricing
+    models, bespoke contract terms, ERP/CRM integrations, and basic support.
+    Quote builder and a custom reporting dashboard are optional add-ons.
+  entries:
+  - label: Platform Fee
+    name: growth_platform_fee
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: approximately $799/month (see pricing page)
+    userMultiplied: false
+  elements:
+  - name: Native Invoicing
+  - name: Usage Metering
+  - name: Advanced Pricing Models
+  - name: Bespoke Contract Terms
+  - name: ERP/CRM Integrations
+  - name: Basic Support
+- id: sequence-core
+  name: Core
+  type: flat
+  description: >-
+    Bespoke monthly platform fee for companies with roughly $1-10M annual
+    revenue. Everything in Growth plus sales tax integrations, NetSuite and
+    Salesforce integrations, and priority support. Optional add-ons include
+    quote builder, custom reporting, and revenue recognition.
+  entries:
+  - label: Platform Fee
+    name: core_platform_fee
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: bespoke (based on projected billed revenue and features)
+    userMultiplied: false
+  elements:
+  - name: Everything in Growth
+  - name: Sales Tax Integrations
+  - name: NetSuite Integration
+  - name: Salesforce Integration
+  - name: Priority Support
+  - name: Revenue Recognition (add-on)
+- id: sequence-scale
+  name: Scale
+  type: enterprise
+  description: >-
+    Bespoke plan for companies with $10M+ annual revenue. Everything in Core
+    plus a dedicated onboarding manager, migration services, engineer support,
+    a shared Slack channel, custom integrations and pricing scenarios, and SLAs.
+  entries:
+  - label: Platform Fee
+    name: scale_platform_fee
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: bespoke (contact sales)
+    userMultiplied: false
+  elements:
+  - name: Everything in Core
+  - name: Dedicated Onboarding Manager
+  - name: Migration Services
+  - name: Engineer Support
+  - name: Shared Slack Channel
+  - name: Custom Integrations
+  - name: SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

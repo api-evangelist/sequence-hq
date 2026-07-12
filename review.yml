@@ -1,0 +1,120 @@
+aid: sequence-hq
+name: Sequence
+review:
+  question: Does Sequence expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Sequence's public API surface is
+    request/response REST over HTTPS. Its only server-initiated transport is
+    outbound HTTP webhooks (signed POST callbacks), not a WebSocket or SSE
+    stream on Sequence's own API, so there is no server-push channel to model.
+findings:
+  summary: |
+    Sequence does not publish a documented public WebSocket API. Sequence is a
+    usage-based billing, pricing, and revenue orchestration platform. Its API
+    is resource-based REST over HTTPS with a production base of
+    https://eu.sequencehq.com (Sandbox: https://sandbox.sequencehq.com),
+    authenticated with HTTP Basic auth using a Client ID (username) and Client
+    Secret (password), and versioned by date via the sequence-version header
+    (for example 2024-07-30). Server-to-client notifications are delivered as
+    outbound HTTP webhooks - POST callbacks signed with an HMAC-SHA256
+    Sequence-Signature header carrying a timestamp for replay protection, with
+    exponential-backoff retries. No realtime, bidirectional, or streaming
+    WebSocket (ws:// or wss://) endpoint is documented anywhere in Sequence's
+    API reference, authentication, or webhooks documentation.
+  disambiguation: |
+    This review covers Sequence the billing/revenue platform at sequencehq.com
+    (docs.sequencehq.com, API host eu.sequencehq.com), NOT the web3 wallet
+    "Sequence" (sequence.xyz / 0xsequence) and NOT the personal-finance
+    money-routing app at getsequence.io (whose support.getsequence.io docs
+    describe an x-sequence-access-token "Remote API" for triggering money-move
+    rules - a different company). Endpoint, auth, and pricing facts here were
+    taken only from sequencehq.com properties.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://eu.sequencehq.com
+      documented: true
+      note: Production (EU) base host. Sandbox base is https://sandbox.sequencehq.com. Usage ingestion is under the /api/ prefix; most resources are at the host root.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outbound signed HTTP POST callbacks (Sequence-Signature = timestamp + HMAC-SHA256). 19 event types across customers, invoices, billing schedules, credit notes, and quotes. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Sequence's API reference, authentication, or webhooks documentation as of the review date.
+  endpointsConfirmedRest:
+    - GET  https://eu.sequencehq.com/customers
+    - POST https://eu.sequencehq.com/api/usage-events
+    - GET  https://eu.sequencehq.com/billing-schedules
+    - GET  https://eu.sequencehq.com/invoices
+    - GET  https://eu.sequencehq.com/products
+  endpointsModeled:
+    - POST   https://eu.sequencehq.com/customers
+    - GET    https://eu.sequencehq.com/customers/{id}
+    - GET    https://eu.sequencehq.com/usage-metrics
+    - GET    https://eu.sequencehq.com/billing-schedules/{id}
+    - POST   https://eu.sequencehq.com/invoices/{id}/finalize
+    - GET    https://eu.sequencehq.com/prices
+    - GET    https://eu.sequencehq.com/quotes
+  modeledNote: |
+    The operations under endpointsModeled are real - their names are published
+    in Sequence's documentation index (docs.sequencehq.com/llms.txt) and API
+    reference - but their exact path spelling and request/response schemas were
+    modeled for the OpenAPI and collections in this repo and flagged with
+    x-modeled. Sequence publishes per-section OpenAPI specs (account, billing,
+    collections, customer, invoices, notifications, product, quote, taxes,
+    usage) in latest and 2024-07-30 versions on its Mintlify docs; a single
+    machine-readable bundle was not retrieved as a raw file during review, so
+    the repo OpenAPI is a hand-authored, grounded approximation.
+  authentication: |
+    HTTP Basic auth. Client ID = username, Client Secret = password, sent as
+    Authorization: Basic base64(clientId:clientSecret). Credentials are created
+    in the Dashboard; the secret is shown once. Production and Sandbox
+    environments each have their own credentials.
+  rateLimits: |
+    Per API key: 1,500 requests/minute on standard endpoints; 12,000
+    requests/minute on POST /api/usage-events. HTTP 429 on throttle.
+sources:
+  - url: https://docs.sequencehq.com/reference/gettingStarted
+    type: Documentation
+    note: Getting started; Production and Sandbox environments; REST design similar in spirit to Stripe.
+  - url: https://docs.sequencehq.com/reference/authentication
+    type: Documentation
+    note: HTTP Basic auth with Client ID / Client Secret; rate limits 1,500 rpm standard and 12,000 rpm for usage events.
+  - url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+    type: APIReference
+    note: Confirmed GET https://eu.sequencehq.com/customers with filters and cursor pagination; server list includes Sandbox and Production (EU).
+  - url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+    type: APIReference
+    note: Confirmed POST https://eu.sequencehq.com/api/usage-events; customerAlias and eventType required.
+  - url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+    type: APIReference
+    note: Confirmed GET https://eu.sequencehq.com/billing-schedules.
+  - url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+    type: APIReference
+    note: Confirmed GET https://eu.sequencehq.com/invoices.
+  - url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+    type: APIReference
+    note: Confirmed GET https://eu.sequencehq.com/products.
+  - url: https://docs.sequencehq.com/reference/webhook-events
+    type: Documentation
+    note: 19 webhook event types; Sequence-Signature HMAC-SHA256 header; HTTP POST callbacks only, no WebSocket.
+  - url: https://docs.sequencehq.com/llms.txt
+    type: Documentation
+    note: Full documentation index used to enumerate documented operations and per-section OpenAPI specs.
+  - url: https://www.sequencehq.com/pricing
+    type: Pricing
+    note: Growth / Core / Scale tiers; monthly platform fee scaled by projected billed revenue.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists, and Sequence's own public API is
+    request/response REST plus outbound signed HTTP webhooks. No AsyncAPI
+    document was created because there is no server-push transport (WebSocket
+    or SSE) on Sequence's own API to model.

@@ -1,0 +1,52 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Sequence
+providerId: sequence-hq
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Billing
+- Usage-Based Billing
+- Metering
+- Rate Limiting
+- Quotas
+description: >-
+  Sequence publishes per-API-key rate limits on its REST API. Standard endpoints
+  are limited to 1,500 requests per minute per API key. The high-volume usage
+  ingestion endpoint (POST /api/usage-events) has a separate, much higher ceiling
+  of 12,000 requests per minute per API key, reflecting its role as the metering
+  hot path for usage-based billing. Requests over the limit are throttled with an
+  HTTP 429 response.
+notes: >-
+  The 1,500 rpm standard and 12,000 rpm usage-event limits are taken from the
+  live authentication/getting-started documentation. Confirm current values and
+  any per-endpoint overrides on https://docs.sequencehq.com during
+  reconciliation.
+sources:
+- https://docs.sequencehq.com/reference/authentication
+- https://docs.sequencehq.com/reference/gettingStarted
+responseCodes:
+  throttled: 429
+limits:
+- name: Standard Endpoints
+  scope: api_key
+  metric: requests
+  limit: 1500 per minute
+  notes: Applies to standard REST endpoints (customers, billing schedules, invoices, products, quotes, etc.).
+- name: Usage Event Ingestion
+  scope: api_key
+  metric: requests
+  limit: 12000 per minute
+  notes: Higher dedicated ceiling for POST /api/usage-events, the metering ingestion path.
+policies:
+- name: Per-Key Limits
+  description: Limits are enforced per API key (Client ID / Client Secret pair), so throughput can be scaled by provisioning additional keys where permitted.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on HTTP 429 responses and honor any Retry-After header.
+- name: Idempotency
+  description: Usage events accept a customerEventId idempotency key so safe retries after throttling do not double-count usage.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sequence API",
+    "version": "2024-07-30",
+    "description": "Sequence usage-based billing, pricing, and revenue orchestration API. Base URL https://eu.sequencehq.com (Sandbox https://sandbox.sequencehq.com). HTTP Basic auth with Client ID and Client Secret. Confirmed endpoints: GET /customers, POST /api/usage-events, GET /billing-schedules, GET /invoices, GET /products. Other items are modeled from the documented operation index."
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{clientId}}",
+      "password": "{{clientSecret}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Customers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List customers (confirmed)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/customers?limit=20&sortOrder=DESC",
+            "params": [
+              { "name": "limit", "value": "20", "type": "query", "description": "Results per page (1-100)." },
+              { "name": "sortOrder", "value": "DESC", "type": "query", "description": "ASC or DESC." }
+            ]
+          },
+          "docs": "Lists customers with filtering, sorting, and cursor pagination. Confirmed against the live Sequence API reference."
+        },
+        {
+          "info": { "name": "Create a customer (modeled)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/customers",
+            "body": { "type": "json", "data": "{\n  \"legalName\": \"Acme, Inc.\",\n  \"aliases\": [\"acme-prod\"]\n}" }
+          },
+          "docs": "Creates a customer. Payload modeled from the documented operation."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Usage & Metering", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a usage event (confirmed)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/api/usage-events",
+            "body": { "type": "json", "data": "{\n  \"customerAlias\": \"acme-prod\",\n  \"eventType\": \"api_call\",\n  \"customerEventId\": \"evt-0001\",\n  \"eventTimestamp\": \"2026-07-12T12:00:00Z\",\n  \"eventProperties\": { \"quantity\": 1 }\n}" }
+          },
+          "docs": "Ingests a usage event attributed via customerAlias and classified by eventType. Confirmed host and path; higher separate rate limit applies."
+        },
+        {
+          "info": { "name": "List usage metrics (modeled)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/usage-metrics"
+          },
+          "docs": "Lists usage metrics. Path/payload modeled from the documented operation."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Billing Schedules", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List billing schedules (confirmed)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/billing-schedules"
+          },
+          "docs": "Lists billing schedules. Confirmed host and path."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Invoices & Credit Notes", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List invoices (confirmed)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/invoices"
+          },
+          "docs": "Lists invoices. Confirmed host and path."
+        },
+        {
+          "info": { "name": "Finalize an invoice (modeled)", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/invoices/:id/finalize",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "The invoice ID." }
+            ]
+          },
+          "docs": "Finalizes a draft invoice. Path modeled from the documented 'Finalize invoice' operation."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Products & Prices", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List products (confirmed)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/products"
+          },
+          "docs": "Lists products. Confirmed host and path."
+        },
+        {
+          "info": { "name": "List prices (modeled)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/prices"
+          },
+          "docs": "Lists prices. Path/payload modeled from the documented operation."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Quotes", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List quotes (modeled)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/quotes"
+          },
+          "docs": "Lists quotes. Path/payload modeled from the documented operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

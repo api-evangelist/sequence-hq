@@ -1,0 +1,22 @@
+generated: '2026-07-12'
+method: documented
+source: https://docs.sequencehq.com/reference/authentication
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: >-
+    HTTP Basic authentication. When you create an API client in the Sequence
+    Dashboard you receive a Client ID and a Client Secret. The Client ID is used
+    as the Basic auth username and the Client Secret as the password, sent as
+    `Authorization: Basic base64(clientId:clientSecret)`. The Client Secret is
+    shown only once and cannot be retrieved later. Requests also accept a
+    `sequence-version` header to pin the date-based API version (for example
+    2024-07-30). Two environments are available - Production and Sandbox - each
+    with its own credentials.
+  sources:
+  - https://docs.sequencehq.com/reference/authentication
+  - https://docs.sequencehq.com/reference/gettingStarted
