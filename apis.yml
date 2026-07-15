@@ -163,6 +163,8 @@ apis:
     signed and accepted, convert into billing schedules - the quote-to-revenue
     path for sales-led usage-based businesses.
 common:
+- type: AgenticAccess
+  url: agentic-access/sequence-hq-agentic-access.yml
 - type: DomainSecurity
   url: security/sequence-hq-domain-security.yml
 - type: Authentication
