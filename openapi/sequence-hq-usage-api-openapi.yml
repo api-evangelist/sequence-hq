@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: Sequence Billing Schedules Usage API
+  description: 'The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
+
+
+    GROUNDING NOTE (API Evangelist): This document is grounded in Sequence''s live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.'
+  version: '2024-07-30'
+  contact:
+    name: Sequence
+    url: https://www.sequencehq.com
+  x-grounding:
+    confirmed:
+    - GET /customers
+    - POST /api/usage-events
+    - GET /billing-schedules
+    - GET /invoices
+    - GET /products
+    modeledNote: Operations not in the confirmed list are documented by name in Sequence's reference index; their schemas and some paths are modeled and flagged with x-modeled.
+    source: https://docs.sequencehq.com
+    reviewer: API Evangelist
+    reviewed: '2026-07-12'
+servers:
+- url: https://eu.sequencehq.com
+  description: Production (EU)
+- url: https://sandbox.sequencehq.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Usage
+  description: Usage event ingestion, usage metrics, and seats.
+paths:
+  /api/usage-events:
+    post:
+      operationId: createUsageEvent
+      tags:
+      - Usage
+      summary: Create a usage event
+      description: Ingests a single usage event attributed to a customer via its alias and classified by eventType. Confirmed against the live Sequence API reference (host and path). This endpoint has a higher, separate rate limit than standard endpoints.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageEventInput'
+      responses:
+        '200':
+          description: The recorded usage event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageEvent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    get:
+      operationId: listUsageEvents
+      tags:
+      - Usage
+      summary: List usage events
+      description: Lists previously ingested usage events. Schema modeled.
+      x-modeled: true
+      responses:
+        '200':
+          description: A page of usage events.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageEvent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /usage-metrics:
+    get:
+      operationId: listUsageMetrics
+      tags:
+      - Usage
+      summary: List usage metrics
+      description: Lists usage metrics - the aggregation definitions that turn raw usage events into billable quantities. Path and schema modeled from the documented operation.
+      x-modeled: true
+      responses:
+        '200':
+          description: A page of usage metrics.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageMetric'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createUsageMetric
+      tags:
+      - Usage
+      summary: Create a usage metric
+      description: Creates a usage metric. Path and schema modeled.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageMetric'
+      responses:
+        '200':
+          description: The created usage metric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageMetric'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    UsageMetric:
+      type: object
+      description: Usage metric aggregation definition (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        eventType:
+          type: string
+        aggregationType:
+          type: string
+          description: Aggregation applied to matching events, for example COUNT or SUM.
+        aggregationProperty:
+          type: string
+    UsageEvent:
+      allOf:
+      - $ref: '#/components/schemas/UsageEventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+    UsageEventInput:
+      type: object
+      description: Usage event ingestion payload. `customerAlias` and `eventType` are required per the live reference; other fields are optional.
+      required:
+      - customerAlias
+      - eventType
+      properties:
+        customerAlias:
+          type: string
+          description: End-customer alias or ID that this event is attributed to.
+        eventType:
+          type: string
+          description: Event type, referenced from a usage metric.
+        customerEventId:
+          type: string
+          description: Idempotency key. A subsequent event with the same customerEventId supersedes the prior one.
+        eventTimestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for when the event occurred.
+        eventProperties:
+          type: object
+          description: Arbitrary custom properties used by metric aggregation.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic authentication. The Client ID is the username and the Client Secret is the password, sent as `Authorization: Basic base64(clientId:clientSecret)`. Credentials are created in the Sequence Dashboard; the Client Secret is shown only once.'

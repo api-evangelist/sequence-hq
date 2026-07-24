@@ -1,0 +1,293 @@
+openapi: 3.0.3
+info:
+  title: Sequence Billing Schedules Customers API
+  description: 'The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
+
+
+    GROUNDING NOTE (API Evangelist): This document is grounded in Sequence''s live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.'
+  version: '2024-07-30'
+  contact:
+    name: Sequence
+    url: https://www.sequencehq.com
+  x-grounding:
+    confirmed:
+    - GET /customers
+    - POST /api/usage-events
+    - GET /billing-schedules
+    - GET /invoices
+    - GET /products
+    modeledNote: Operations not in the confirmed list are documented by name in Sequence's reference index; their schemas and some paths are modeled and flagged with x-modeled.
+    source: https://docs.sequencehq.com
+    reviewer: API Evangelist
+    reviewed: '2026-07-12'
+servers:
+- url: https://eu.sequencehq.com
+  description: Production (EU)
+- url: https://sandbox.sequencehq.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Customers
+  description: Billable customer entities, contacts, and aliases.
+paths:
+  /customers:
+    get:
+      operationId: listCustomers
+      tags:
+      - Customers
+      summary: List customers
+      description: Lists customers with filtering, sorting, and cursor pagination. Confirmed against the live Sequence API reference.
+      parameters:
+      - name: sequence-version
+        in: header
+        required: false
+        description: API version to use, for example 2024-07-30. Defaults to the account's pinned version.
+        schema:
+          type: string
+      - name: legalName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: alias
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: label
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: billingStatus
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+      - name: includeArchived
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sortOrder
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+          default: DESC
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of customers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCustomer
+      tags:
+      - Customers
+      summary: Create a customer
+      description: Creates a new customer. Schema modeled from the documented operation.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The created customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /customers/{id}:
+    parameters:
+    - $ref: '#/components/parameters/CustomerId'
+    get:
+      operationId: getCustomer
+      tags:
+      - Customers
+      summary: Get a customer
+      description: Retrieves a customer by ID. Schema modeled.
+      x-modeled: true
+      responses:
+        '200':
+          description: The requested customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCustomer
+      tags:
+      - Customers
+      summary: Update a customer
+      description: Updates a customer. Schema modeled.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The updated customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          billingStatus:
+            type: string
+            enum:
+            - ACTIVE
+            - INACTIVE
+          archived:
+            type: boolean
+          createdAt:
+            type: string
+            format: date-time
+    CustomerInput:
+      type: object
+      description: Customer create/update payload (modeled).
+      x-modeled: true
+      required:
+      - legalName
+      properties:
+        legalName:
+          type: string
+        email:
+          type: string
+          format: email
+        label:
+          type: string
+        aliases:
+          type: array
+          description: External identifiers used to attribute usage to this customer.
+          items:
+            type: string
+        taxStatus:
+          type: string
+    CustomerList:
+      type: object
+      description: Cursor-paginated list of customers (envelope modeled).
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        pagination:
+          type: object
+          properties:
+            after:
+              type: string
+              nullable: true
+            before:
+              type: string
+              nullable: true
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+  parameters:
+    CustomerId:
+      name: id
+      in: path
+      required: true
+      description: The customer ID.
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic authentication. The Client ID is the username and the Client Secret is the password, sent as `Authorization: Basic base64(clientId:clientSecret)`. Credentials are created in the Sequence Dashboard; the Client Secret is shown only once.'

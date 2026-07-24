@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Sequence Billing Schedules Products API
+  description: 'The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
+
+
+    GROUNDING NOTE (API Evangelist): This document is grounded in Sequence''s live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.'
+  version: '2024-07-30'
+  contact:
+    name: Sequence
+    url: https://www.sequencehq.com
+  x-grounding:
+    confirmed:
+    - GET /customers
+    - POST /api/usage-events
+    - GET /billing-schedules
+    - GET /invoices
+    - GET /products
+    modeledNote: Operations not in the confirmed list are documented by name in Sequence's reference index; their schemas and some paths are modeled and flagged with x-modeled.
+    source: https://docs.sequencehq.com
+    reviewer: API Evangelist
+    reviewed: '2026-07-12'
+servers:
+- url: https://eu.sequencehq.com
+  description: Production (EU)
+- url: https://sandbox.sequencehq.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Products
+  description: Product and price catalog.
+paths:
+  /products:
+    get:
+      operationId: listProducts
+      tags:
+      - Products
+      summary: List products
+      description: Lists products in the catalog. Confirmed against the live Sequence API reference (host and path). Response schema modeled.
+      responses:
+        '200':
+          description: A page of products.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProduct
+      tags:
+      - Products
+      summary: Create a product
+      description: Creates a product. Schema modeled.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: The created product.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /prices:
+    get:
+      operationId: listPrices
+      tags:
+      - Products
+      summary: List prices
+      description: Lists prices. Path and schema modeled from the documented "List all Prices" operation.
+      x-modeled: true
+      responses:
+        '200':
+          description: A page of prices.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Price'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createPrice
+      tags:
+      - Products
+      summary: Create a price
+      description: Creates a price. Path and schema modeled.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+      responses:
+        '200':
+          description: The created price.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Price:
+      type: object
+      description: Price attached to a product (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        pricingModel:
+          type: string
+          description: For example FIXED, PER_UNIT, TIERED, or USAGE_BASED.
+        billingFrequency:
+          type: string
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+    Product:
+      type: object
+      description: Catalog product (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        archived:
+          type: boolean
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic authentication. The Client ID is the username and the Client Secret is the password, sent as `Authorization: Basic base64(clientId:clientSecret)`. Credentials are created in the Sequence Dashboard; the Client Secret is shown only once.'

@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: Sequence Billing Schedules Invoices API
+  description: 'The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
+
+
+    GROUNDING NOTE (API Evangelist): This document is grounded in Sequence''s live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.'
+  version: '2024-07-30'
+  contact:
+    name: Sequence
+    url: https://www.sequencehq.com
+  x-grounding:
+    confirmed:
+    - GET /customers
+    - POST /api/usage-events
+    - GET /billing-schedules
+    - GET /invoices
+    - GET /products
+    modeledNote: Operations not in the confirmed list are documented by name in Sequence's reference index; their schemas and some paths are modeled and flagged with x-modeled.
+    source: https://docs.sequencehq.com
+    reviewer: API Evangelist
+    reviewed: '2026-07-12'
+servers:
+- url: https://eu.sequencehq.com
+  description: Production (EU)
+- url: https://sandbox.sequencehq.com
+  description: Sandbox
+security:
+- basicAuth: []
+tags:
+- name: Invoices
+  description: Invoice and credit note lifecycle.
+paths:
+  /invoices:
+    get:
+      operationId: listInvoices
+      tags:
+      - Invoices
+      summary: List invoices
+      description: Lists invoices. Confirmed against the live Sequence API reference (host and path). Response schema modeled.
+      responses:
+        '200':
+          description: A page of invoices.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createInvoice
+      tags:
+      - Invoices
+      summary: Create an invoice
+      description: Creates a draft invoice. Schema modeled.
+      x-modeled: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice'
+      responses:
+        '200':
+          description: The created invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /invoices/{id}:
+    parameters:
+    - $ref: '#/components/parameters/GenericId'
+    get:
+      operationId: getInvoice
+      tags:
+      - Invoices
+      summary: Get an invoice
+      description: Retrieves an invoice by ID. Schema modeled.
+      x-modeled: true
+      responses:
+        '200':
+          description: The requested invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /invoices/{id}/finalize:
+    parameters:
+    - $ref: '#/components/parameters/GenericId'
+    post:
+      operationId: finalizeInvoice
+      tags:
+      - Invoices
+      summary: Finalize an invoice
+      description: Finalizes a draft invoice, moving it out of draft so it can be sent. Path and schema modeled from the documented "Finalize invoice" operation.
+      x-modeled: true
+      responses:
+        '200':
+          description: The finalized invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    GenericId:
+      name: id
+      in: path
+      required: true
+      description: The resource ID.
+      schema:
+        type: string
+  schemas:
+    Invoice:
+      type: object
+      description: Invoice (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        status:
+          type: string
+          description: For example DRAFT, FINALIZED, SENT, PAID, or VOID.
+        currency:
+          type: string
+        total:
+          type: number
+        dueDate:
+          type: string
+          format: date
+        lineItems:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: 'HTTP Basic authentication. The Client ID is the username and the Client Secret is the password, sent as `Authorization: Basic base64(clientId:clientSecret)`. Credentials are created in the Sequence Dashboard; the Client Secret is shown only once.'
