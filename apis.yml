@@ -12,7 +12,20 @@ description: Sequence is a usage-based billing, pricing, and revenue orchestrati
   versioning (for example sequence-version 2024-07-30), and signed webhooks for
   event notifications. A Sandbox environment (https://sandbox.sequencehq.com)
   mirrors production for testing.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sequence-hq.png
 tags:
 - Billing
 - Usage-Based Billing
@@ -26,142 +39,174 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: sequence-hq:sequence-hq-customers-api
-  name: Sequence Customers API
-  tags:
-  - Customers
-  - Contacts
-  - Billing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
-  baseURL: https://eu.sequencehq.com
-  properties:
-  - url: https://docs.sequencehq.com/reference/gettingStarted
-    type: Documentation
-  - url: https://docs.sequencehq.com/reference/latest/customer/list-customers
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: Create, retrieve, update, archive, and list customers, along with
-    their contacts, customer aliases (external IDs used to attribute usage), and
-    customer organizations. Customers are the billable entities that billing
-    schedules, invoices, and usage events attach to.
-- aid: sequence-hq:sequence-hq-usage-metering-api
-  name: Sequence Usage & Metering API
-  tags:
-  - Usage-Based Billing
-  - Metering
-  - Events
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
-  baseURL: https://eu.sequencehq.com
-  properties:
-  - url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: Ingest usage events (POST /api/usage-events, rate-limited separately
-    at a higher ceiling) keyed by customerAlias and eventType, define and manage
-    usage metrics that aggregate those events, calculate a metric for a customer
-    over a timeframe, and manage seat metrics and seat events for seat-based
-    billing. This is the metering foundation for usage-based pricing.
 - aid: sequence-hq:sequence-hq-billing-schedules-api
   name: Sequence Billing Schedules API
-  tags:
-  - Billing
-  - Subscriptions
-  - Contracts
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  description: Recurring contract terms that generate invoices.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
   baseURL: https://eu.sequencehq.com
-  properties:
-  - url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: Create, activate, archive, duplicate, retrieve, update, and list
-    billing schedules - the recurring contract terms that translate a customer's
-    negotiated pricing into automatically generated invoices over time. Includes
-    tax validation on a billing schedule.
-- aid: sequence-hq:sequence-hq-invoices-credit-notes-api
-  name: Sequence Invoices & Credit Notes API
   tags:
-  - Invoicing
-  - Credit Notes
-  - Accounts Receivable
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - Billing Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/sequence-hq-billing-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+- aid: sequence-hq:sequence-hq-customers-api
+  name: Sequence Customers API
+  description: Billable customer entities, contacts, and aliases.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
   baseURL: https://eu.sequencehq.com
-  properties:
-  - url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: Manage the accounts-receivable lifecycle - create, retrieve, update,
-    patch, finalize, send, void, and delete invoices, manage line items and line
-    item groups, download invoice PDFs, and issue credit notes against invoices.
-    Covers draft-to-sent transitions, payment reminders, and payment status
-    updates.
-- aid: sequence-hq:sequence-hq-products-prices-api
-  name: Sequence Products & Prices API
   tags:
-  - Pricing
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/sequence-hq-customers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+- aid: sequence-hq:sequence-hq-invoices-api
+  name: Sequence Invoices API
+  description: Invoice and credit note lifecycle.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  baseURL: https://eu.sequencehq.com
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/sequence-hq-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+- aid: sequence-hq:sequence-hq-products-api
+  name: Sequence Products API
+  description: Product and price catalog.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  baseURL: https://eu.sequencehq.com
+  tags:
   - Products
-  - Catalog
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/product/list-all-products
-  baseURL: https://eu.sequencehq.com
   properties:
-  - url: https://docs.sequencehq.com/reference/latest/product/list-all-products
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: Manage the product and pricing catalog - create, retrieve, update,
-    and archive products; create, retrieve, update, and delete prices; and manage
-    reusable list prices. Pricing models support flat, per-unit, tiered, and
-    usage-based structures that feed billing schedules and quotes.
+  - type: OpenAPI
+    url: openapi/sequence-hq-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
 - aid: sequence-hq:sequence-hq-quotes-api
   name: Sequence Quotes API
+  description: Quotes and quote analytics.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  baseURL: https://eu.sequencehq.com
   tags:
   - Quotes
-  - CPQ
-  - Revenue Orchestration
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.sequencehq.com/reference/latest/quote/list-quotes
-  baseURL: https://eu.sequencehq.com
   properties:
-  - url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
-    type: APIReference
-  - url: openapi/sequence-hq-openapi.yml
-    type: OpenAPI
-  - url: collections/sequence-hq.postman_collection.json
-    type: PostmanCollection
-  - url: collections/sequence-hq.opencollection.json
-    type: OpenCollection
-  description: List quotes, retrieve quote analytics, and download quote PDFs.
-    Quotes capture negotiated deal terms (products, prices, discounts) that, once
-    signed and accepted, convert into billing schedules - the quote-to-revenue
-    path for sales-led usage-based businesses.
+  - type: OpenAPI
+    url: openapi/sequence-hq-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
+- aid: sequence-hq:sequence-hq-usage-api
+  name: Sequence Usage API
+  description: Usage event ingestion, usage metrics, and seats.
+  humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  baseURL: https://eu.sequencehq.com
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/sequence-hq-usage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sequencehq.com/reference/gettingStarted
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/customer/list-customers
+  - type: PostmanCollection
+    url: collections/sequence-hq.postman_collection.json
+  - type: OpenCollection
+    url: collections/sequence-hq.opencollection.json
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/product/list-all-products
+  - type: APIReference
+    url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
 common:
 - type: AgenticAccess
   url: agentic-access/sequence-hq-agentic-access.yml
