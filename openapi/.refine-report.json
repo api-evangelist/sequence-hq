@@ -1,0 +1,24 @@
+{
+  "provider": "sequence-hq",
+  "sources": [
+    "sequence-hq-billing-schedules-api-openapi.yml",
+    "sequence-hq-customers-api-openapi.yml",
+    "sequence-hq-invoices-api-openapi.yml",
+    "sequence-hq-products-api-openapi.yml",
+    "sequence-hq-quotes-api-openapi.yml",
+    "sequence-hq-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "sequence-hq-billing-schedules-api-openapi.yml",
+    "sequence-hq-customers-api-openapi.yml",
+    "sequence-hq-invoices-api-openapi.yml",
+    "sequence-hq-products-api-openapi.yml",
+    "sequence-hq-quotes-api-openapi.yml",
+    "sequence-hq-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
