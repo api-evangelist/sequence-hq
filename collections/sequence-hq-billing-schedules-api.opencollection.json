@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sequence Billing Schedules API",
+    "version": "2024-07-30"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List billing schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/billing-schedules"
+          },
+          "docs": "Lists billing schedules. Confirmed against the live Sequence API reference (host and path). Response schema modeled."
+        },
+        {
+          "info": {
+            "name": "Create a billing schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/billing-schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a billing schedule. Schema modeled."
+        },
+        {
+          "info": {
+            "name": "Get a billing schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/billing-schedules/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The resource ID."
+              }
+            ]
+          },
+          "docs": "Retrieves a billing schedule by ID. Schema modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

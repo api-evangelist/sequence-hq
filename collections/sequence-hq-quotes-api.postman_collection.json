@@ -1,0 +1,166 @@
+{
+  "item": [
+    {
+      "id": "13cb022f-e9dd-46ef-ae5d-25f83230a4d5",
+      "name": "Quotes",
+      "description": {
+        "content": "Quotes and quote analytics.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0a1ebba2-ce7e-49f4-b500-03b22d1d18b9",
+          "name": "List quotes",
+          "request": {
+            "name": "List quotes",
+            "description": {
+              "content": "Lists quotes. Path and schema modeled from the documented \"List quotes\" operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd7d5b4e-51f8-4e10-b4de-fbd923a806a2",
+              "name": "A page of quotes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"customerId\": \"string\",\n      \"status\": \"string\",\n      \"currency\": \"string\",\n      \"total\": 7532.060287479063\n    },\n    {\n      \"id\": \"string\",\n      \"customerId\": \"string\",\n      \"status\": \"string\",\n      \"currency\": \"string\",\n      \"total\": 9050.215661299857\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e61457c3-a0ad-4789-bc09-de7dc2b39b64",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": 3983\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://eu.sequencehq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "33d67af6-a0e5-4969-a342-ece82822a4fc",
+    "name": "Sequence Billing Schedules Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.\n\nGROUNDING NOTE (API Evangelist): This document is grounded in Sequence's live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.\n\nContact Support:\n Name: Sequence",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,696 @@
+{
+  "item": [
+    {
+      "id": "522e1019-f517-47e8-981f-cd478f9a61b7",
+      "name": "Usage",
+      "description": {
+        "content": "Usage event ingestion, usage metrics, and seats.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "307074d1-b338-493a-a7ce-3e532ba991dd",
+          "name": "Create a usage event",
+          "request": {
+            "name": "Create a usage event",
+            "description": {
+              "content": "Ingests a single usage event attributed to a customer via its alias and classified by eventType. Confirmed against the live Sequence API reference (host and path). This endpoint has a higher, separate rate limit than standard endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "usage-events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerAlias\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"customerEventId\": \"<string>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"eventProperties\": {\n    \"key_0\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dbfaeca-183f-43b3-ae9c-77eeced60158",
+              "name": "The recorded usage event.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerAlias\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"customerEventId\": \"<string>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"eventProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerAlias\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"customerEventId\": \"<string>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"eventProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  },\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75f6959e-e94f-4912-ad60-b659ad8261fe",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerAlias\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"customerEventId\": \"<string>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"eventProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a501fb7-7089-4383-a46b-26a4ca2ad875",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerAlias\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"customerEventId\": \"<string>\",\n  \"eventTimestamp\": \"<dateTime>\",\n  \"eventProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3dbfa51f-ad19-4e6b-b12d-dece28691703",
+          "name": "List usage events",
+          "request": {
+            "name": "List usage events",
+            "description": {
+              "content": "Lists previously ingested usage events. Schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "usage-events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f156f99-4373-45ca-840c-d577018494ae",
+              "name": "A page of usage events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"customerAlias\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"customerEventId\": \"<string>\",\n      \"eventTimestamp\": \"<dateTime>\",\n      \"eventProperties\": {\n        \"key_0\": \"string\",\n        \"key_1\": 5261,\n        \"key_2\": 7168.054178123656,\n        \"key_3\": \"string\"\n      },\n      \"id\": \"string\"\n    },\n    {\n      \"customerAlias\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"customerEventId\": \"<string>\",\n      \"eventTimestamp\": \"<dateTime>\",\n      \"eventProperties\": {\n        \"key_0\": false,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": 2917\n      },\n      \"id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c62c4b13-8574-42e4-a613-f54002735d2f",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "usage-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bea3bea5-62a2-4d6e-bde7-26f657519455",
+          "name": "List usage metrics",
+          "request": {
+            "name": "List usage metrics",
+            "description": {
+              "content": "Lists usage metrics - the aggregation definitions that turn raw usage events into billable quantities. Path and schema modeled from the documented operation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage-metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66a35322-3a68-4f5a-ba65-3cc43a635c9f",
+              "name": "A page of usage metrics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage-metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"eventType\": \"string\",\n      \"aggregationType\": \"string\",\n      \"aggregationProperty\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"eventType\": \"string\",\n      \"aggregationType\": \"string\",\n      \"aggregationProperty\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9173327-ecd8-4e4e-a1ec-85311402feb2",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage-metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6575a543-850a-4410-b2d0-8fb433a4fade",
+          "name": "Create a usage metric",
+          "request": {
+            "name": "Create a usage metric",
+            "description": {
+              "content": "Creates a usage metric. Path and schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage-metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"aggregationType\": \"<string>\",\n  \"aggregationProperty\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "900a3e68-7d9b-4dd7-9d23-ff0c34a83047",
+              "name": "The created usage metric.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage-metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"aggregationType\": \"<string>\",\n  \"aggregationProperty\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"aggregationType\": \"<string>\",\n  \"aggregationProperty\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bea8ecb2-3ca6-423d-ad9a-e2f5733a915f",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage-metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"aggregationType\": \"<string>\",\n  \"aggregationProperty\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c8674e8-1c2d-4c1d-944c-0506968589e1",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage-metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"aggregationType\": \"<string>\",\n  \"aggregationProperty\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3811,\n      \"key_2\": 3837.1350549424064\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://eu.sequencehq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fce3353a-835c-4b80-9538-95887b6223c6",
+    "name": "Sequence Billing Schedules Usage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.\n\nGROUNDING NOTE (API Evangelist): This document is grounded in Sequence's live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.\n\nContact Support:\n Name: Sequence",
+      "type": "text/plain"
+    }
+  }
+}

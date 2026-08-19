@@ -1,0 +1,567 @@
+{
+  "item": [
+    {
+      "id": "cd599aed-b14d-4c4c-8ead-ded8bbf334bc",
+      "name": "Billing Schedules",
+      "description": {
+        "content": "Recurring contract terms that generate invoices.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8aad09e-174b-49da-a220-ec32150ef917",
+          "name": "List billing schedules",
+          "request": {
+            "name": "List billing schedules",
+            "description": {
+              "content": "Lists billing schedules. Confirmed against the live Sequence API reference (host and path). Response schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billing-schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abbe08a4-c844-4943-8804-8452c5c740aa",
+              "name": "A page of billing schedules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"customerId\": \"string\",\n      \"status\": \"string\",\n      \"startDate\": \"1983-12-06\",\n      \"endDate\": \"1990-07-01\",\n      \"currency\": \"string\",\n      \"prices\": [\n        {\n          \"id\": \"string\",\n          \"productId\": \"string\",\n          \"name\": \"string\",\n          \"currency\": \"string\",\n          \"pricingModel\": \"string\",\n          \"billingFrequency\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"productId\": \"string\",\n          \"name\": \"string\",\n          \"currency\": \"string\",\n          \"pricingModel\": \"string\",\n          \"billingFrequency\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"customerId\": \"string\",\n      \"status\": \"string\",\n      \"startDate\": \"1974-06-30\",\n      \"endDate\": \"2024-12-31\",\n      \"currency\": \"string\",\n      \"prices\": [\n        {\n          \"id\": \"string\",\n          \"productId\": \"string\",\n          \"name\": \"string\",\n          \"currency\": \"string\",\n          \"pricingModel\": \"string\",\n          \"billingFrequency\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"productId\": \"string\",\n          \"name\": \"string\",\n          \"currency\": \"string\",\n          \"pricingModel\": \"string\",\n          \"billingFrequency\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b06a46b-ff0f-4e40-bc40-ce5f9c24f7ed",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5977c7ff-38f8-4b10-83f3-c47420eee723",
+          "name": "Create a billing schedule",
+          "request": {
+            "name": "Create a billing schedule",
+            "description": {
+              "content": "Creates a billing schedule. Schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billing-schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e369140-419f-4fa3-b608-93564cf51d28",
+              "name": "The created billing schedule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a74f448c-58a9-423e-857e-437736619476",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3393589-54e5-453d-b2af-2c923896b2f0",
+              "name": "The request payload failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e045d2f-9bbd-4927-a7d6-5c82d26bdd42",
+          "name": "Get a billing schedule",
+          "request": {
+            "name": "Get a billing schedule",
+            "description": {
+              "content": "Retrieves a billing schedule by ID. Schema modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billing-schedules",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The resource ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6249db6-b6dd-4d9e-bbc2-b7b7913c15f0",
+              "name": "The requested billing schedule.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The resource ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"currency\": \"<string>\",\n  \"prices\": [\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"pricingModel\": \"<string>\",\n      \"billingFrequency\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59cedfdf-d4fa-4281-af93-700e7299526d",
+              "name": "Missing or invalid Basic auth credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The resource ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35c74e04-9bb9-4116-bcfc-f91fe083fc79",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billing-schedules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The resource ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"details\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://eu.sequencehq.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3a199f7f-afce-42d1-835f-f30a4e80aaac",
+    "name": "Sequence Billing Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.\n\nGROUNDING NOTE (API Evangelist): This document is grounded in Sequence's live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.\n\nContact Support:\n Name: Sequence",
+      "type": "text/plain"
+    }
+  }
+}

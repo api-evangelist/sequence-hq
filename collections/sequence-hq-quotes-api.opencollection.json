@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sequence Billing Schedules Quotes API",
+    "version": "2024-07-30"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/quotes"
+          },
+          "docs": "Lists quotes. Path and schema modeled from the documented \"List quotes\" operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

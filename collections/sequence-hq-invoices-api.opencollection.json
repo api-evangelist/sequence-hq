@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sequence Billing Schedules Invoices API",
+    "version": "2024-07-30"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/invoices"
+          },
+          "docs": "Lists invoices. Confirmed against the live Sequence API reference (host and path). Response schema modeled."
+        },
+        {
+          "info": {
+            "name": "Create an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/invoices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a draft invoice. Schema modeled."
+        },
+        {
+          "info": {
+            "name": "Get an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/invoices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The resource ID."
+              }
+            ]
+          },
+          "docs": "Retrieves an invoice by ID. Schema modeled."
+        },
+        {
+          "info": {
+            "name": "Finalize an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/invoices/:id/finalize",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The resource ID."
+              }
+            ]
+          },
+          "docs": "Finalizes a draft invoice, moving it out of draft so it can be sent. Path and schema modeled from the documented \"Finalize invoice\" operation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

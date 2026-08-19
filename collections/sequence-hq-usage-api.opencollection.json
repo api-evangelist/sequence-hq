@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sequence Billing Schedules Usage API",
+    "version": "2024-07-30"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List usage events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/api/usage-events"
+          },
+          "docs": "Lists previously ingested usage events. Schema modeled."
+        },
+        {
+          "info": {
+            "name": "Create a usage event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/api/usage-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Ingests a single usage event attributed to a customer via its alias and classified by eventType. Confirmed against the live Sequence API reference (host and path). This endpoint has a higher, separate rate limit than standard endpoints."
+        },
+        {
+          "info": {
+            "name": "List usage metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://eu.sequencehq.com/usage-metrics"
+          },
+          "docs": "Lists usage metrics - the aggregation definitions that turn raw usage events into billable quantities. Path and schema modeled from the documented operation."
+        },
+        {
+          "info": {
+            "name": "Create a usage metric",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://eu.sequencehq.com/usage-metrics",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a usage metric. Path and schema modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
