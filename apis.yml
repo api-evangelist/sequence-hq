@@ -129,6 +129,8 @@ apis:
   humanURL: https://docs.sequencehq.com/reference/latest/customer/list-customers
   baseURL: https://eu.sequencehq.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
