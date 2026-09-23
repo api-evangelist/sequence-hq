@@ -1,0 +1,1 @@
+{"resource":"https://eu.sequencehq.com/mcp","authorization_servers":["https://api.stytch.sequencehq.com"],"bearer_methods_supported":["header"],"scopes_supported":["product","product:read"],"registration_endpoint":"https://api.stytch.sequencehq.com/v1/oauth2/register"}

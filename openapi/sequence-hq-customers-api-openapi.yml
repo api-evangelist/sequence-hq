@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sequence Billing Schedules Customers API
-  description: 'The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes. It is a resource-based REST API over HTTPS using standard HTTP verbs and status codes, authenticated with HTTP Basic auth (Client ID as the username and Client Secret as the password). API changes are managed with date-based versioning selected via the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
-
-
-    GROUNDING NOTE (API Evangelist): This document is grounded in Sequence''s live public documentation at docs.sequencehq.com. The following operations were confirmed directly against the rendered API reference, including host and path: `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, and `GET /products`. Additional operations are real (their names are published in the documentation index) but their exact request/response schemas and, in some cases, exact path spelling are MODELED here and marked with `x-modeled: true`. Verify field names and payloads against the live reference before production use. Usage event ingestion is served under the `/api/` prefix; most resource operations are served at the host root.'
+  title: Sequence Customers API
+  description: The Sequence API lets you programmatically manage usage-based billing, pricing, and revenue orchestration - customers, usage events and usage metrics, billing schedules, invoices and credit notes, products and prices, and quotes.
   version: '2024-07-30'
   contact:
     name: Sequence
@@ -189,14 +186,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    ValidationError:
-      description: The request payload failed validation.
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:
@@ -208,23 +205,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          billingStatus:
-            type: string
-            enum:
-            - ACTIVE
-            - INACTIVE
-          archived:
-            type: boolean
-          createdAt:
-            type: string
-            format: date-time
     CustomerInput:
       type: object
       description: Customer create/update payload (modeled).
@@ -246,23 +226,23 @@ components:
             type: string
         taxStatus:
           type: string
-    CustomerList:
-      type: object
-      description: Cursor-paginated list of customers (envelope modeled).
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-        pagination:
-          type: object
-          properties:
-            after:
-              type: string
-              nullable: true
-            before:
-              type: string
-              nullable: true
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          billingStatus:
+            type: string
+            enum:
+            - ACTIVE
+            - INACTIVE
+          archived:
+            type: boolean
+          createdAt:
+            type: string
+            format: date-time
     Error:
       type: object
       description: Error envelope (modeled).
@@ -278,6 +258,25 @@ components:
             details:
               type: object
               additionalProperties: true
+    CustomerList:
+      type: object
+      description: Cursor-paginated list of customers (envelope modeled).
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        pagination:
+          type: object
+          properties:
+            after:
+              type:
+              - string
+              - 'null'
+            before:
+              type:
+              - string
+              - 'null'
   parameters:
     CustomerId:
       name: id

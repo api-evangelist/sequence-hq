@@ -1,12 +1,7 @@
 {
   "provider": "sequence-hq",
   "sources": [
-    "sequence-hq-billing-schedules-api-openapi.yml",
-    "sequence-hq-customers-api-openapi.yml",
-    "sequence-hq-invoices-api-openapi.yml",
-    "sequence-hq-products-api-openapi.yml",
-    "sequence-hq-quotes-api-openapi.yml",
-    "sequence-hq-usage-api-openapi.yml"
+    "_original/sequence-hq-openapi.yml"
   ],
   "outputs": [
     "sequence-hq-billing-schedules-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sequence-hq-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sequence-hq-billing-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sequence-hq-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sequence-hq-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sequence-hq-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sequence-hq-quotes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sequence-hq-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
