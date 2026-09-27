@@ -95,60 +95,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    GenericId:
-      name: id
-      in: path
-      required: true
-      description: The resource ID.
-      schema:
-        type: string
   schemas:
-    BillingSchedule:
-      type: object
-      description: Recurring billing schedule (modeled).
-      x-modeled: true
-      properties:
-        id:
-          type: string
-        customerId:
-          type: string
-        status:
-          type: string
-          description: For example DRAFT, ACTIVE, or ARCHIVED.
-        startDate:
-          type: string
-          format: date
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date
-        currency:
-          type: string
-        prices:
-          type: array
-          items:
-            $ref: '#/components/schemas/Price'
     Error:
       type: object
       description: Error envelope (modeled).
@@ -182,6 +129,59 @@ components:
           description: For example FIXED, PER_UNIT, TIERED, or USAGE_BASED.
         billingFrequency:
           type: string
+    BillingSchedule:
+      type: object
+      description: Recurring billing schedule (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        status:
+          type: string
+          description: For example DRAFT, ACTIVE, or ARCHIVED.
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        currency:
+          type: string
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/Price'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    GenericId:
+      name: id
+      in: path
+      required: true
+      description: The resource ID.
+      schema:
+        type: string
   securitySchemes:
     basicAuth:
       type: http

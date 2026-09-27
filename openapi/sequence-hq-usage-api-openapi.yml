@@ -120,20 +120,38 @@ paths:
         '422':
           $ref: '#/components/responses/ValidationError'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+    UsageMetric:
+      type: object
+      description: Usage metric aggregation definition (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        eventType:
+          type: string
+        aggregationType:
+          type: string
+          description: Aggregation applied to matching events, for example COUNT or SUM.
+        aggregationProperty:
+          type: string
     UsageEvent:
       allOf:
       - $ref: '#/components/schemas/UsageEventInput'
@@ -165,37 +183,19 @@ components:
           type: object
           description: Arbitrary custom properties used by metric aggregation.
           additionalProperties: true
-    UsageMetric:
-      type: object
-      description: Usage metric aggregation definition (modeled).
-      x-modeled: true
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        eventType:
-          type: string
-        aggregationType:
-          type: string
-          description: Aggregation applied to matching events, for example COUNT or SUM.
-        aggregationProperty:
-          type: string
-    Error:
-      type: object
-      description: Error envelope (modeled).
-      x-modeled: true
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http
