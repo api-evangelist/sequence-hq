@@ -96,21 +96,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error envelope (modeled).
-      x-modeled: true
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              additionalProperties: true
     Price:
       type: object
       description: Price attached to a product (modeled).
@@ -129,6 +114,21 @@ components:
           description: For example FIXED, PER_UNIT, TIERED, or USAGE_BASED.
         billingFrequency:
           type: string
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
     BillingSchedule:
       type: object
       description: Recurring billing schedule (modeled).
@@ -156,12 +156,6 @@ components:
           items:
             $ref: '#/components/schemas/Price'
   responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     ValidationError:
       description: The request payload failed validation.
       content:
@@ -170,6 +164,12 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:

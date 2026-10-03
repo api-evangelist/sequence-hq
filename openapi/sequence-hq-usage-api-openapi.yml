@@ -121,44 +121,6 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   schemas:
-    Error:
-      type: object
-      description: Error envelope (modeled).
-      x-modeled: true
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: object
-              additionalProperties: true
-    UsageMetric:
-      type: object
-      description: Usage metric aggregation definition (modeled).
-      x-modeled: true
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        eventType:
-          type: string
-        aggregationType:
-          type: string
-          description: Aggregation applied to matching events, for example COUNT or SUM.
-        aggregationProperty:
-          type: string
-    UsageEvent:
-      allOf:
-      - $ref: '#/components/schemas/UsageEventInput'
-      - type: object
-        properties:
-          id:
-            type: string
     UsageEventInput:
       type: object
       description: Usage event ingestion payload. `customerAlias` and `eventType` are required per the live reference; other fields are optional.
@@ -183,15 +145,53 @@ components:
           type: object
           description: Arbitrary custom properties used by metric aggregation.
           additionalProperties: true
+    Error:
+      type: object
+      description: Error envelope (modeled).
+      x-modeled: true
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+    UsageEvent:
+      allOf:
+      - $ref: '#/components/schemas/UsageEventInput'
+      - type: object
+        properties:
+          id:
+            type: string
+    UsageMetric:
+      type: object
+      description: Usage metric aggregation definition (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        eventType:
+          type: string
+        aggregationType:
+          type: string
+          description: Aggregation applied to matching events, for example COUNT or SUM.
+        aggregationProperty:
+          type: string
   responses:
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
       content:
         application/json:
           schema:

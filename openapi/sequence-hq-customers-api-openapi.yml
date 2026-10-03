@@ -259,8 +259,8 @@ components:
             type: string
             format: date-time
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:
@@ -271,8 +271,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: The request payload failed validation.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
