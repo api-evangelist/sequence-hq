@@ -223,6 +223,9 @@ apis:
   - type: APIReference
     url: https://docs.sequencehq.com/reference/latest/quote/list-quotes
 common:
+- type: CapabilityMap
+  url: capabilities/sequence-hq-capability-edges.yml
+  name: Sequence Business Capability Map
 - type: AgenticAccess
   url: agentic-access/sequence-hq-agentic-access.yml
 - type: DomainSecurity
