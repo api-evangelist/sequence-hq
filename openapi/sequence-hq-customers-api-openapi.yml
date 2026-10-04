@@ -185,6 +185,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: The request payload failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -201,27 +220,6 @@ components:
             details:
               type: object
               additionalProperties: true
-    CustomerInput:
-      type: object
-      description: Customer create/update payload (modeled).
-      x-modeled: true
-      required:
-      - legalName
-      properties:
-        legalName:
-          type: string
-        email:
-          type: string
-          format: email
-        label:
-          type: string
-        aliases:
-          type: array
-          description: External identifiers used to attribute usage to this customer.
-          items:
-            type: string
-        taxStatus:
-          type: string
     CustomerList:
       type: object
       description: Cursor-paginated list of customers (envelope modeled).
@@ -258,25 +256,27 @@ components:
           createdAt:
             type: string
             format: date-time
-  responses:
-    ValidationError:
-      description: The request payload failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    CustomerInput:
+      type: object
+      description: Customer create/update payload (modeled).
+      x-modeled: true
+      required:
+      - legalName
+      properties:
+        legalName:
+          type: string
+        email:
+          type: string
+          format: email
+        label:
+          type: string
+        aliases:
+          type: array
+          description: External identifiers used to attribute usage to this customer.
+          items:
+            type: string
+        taxStatus:
+          type: string
   parameters:
     CustomerId:
       name: id

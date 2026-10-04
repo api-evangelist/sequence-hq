@@ -145,6 +145,22 @@ components:
           type: object
           description: Arbitrary custom properties used by metric aggregation.
           additionalProperties: true
+    UsageMetric:
+      type: object
+      description: Usage metric aggregation definition (modeled).
+      x-modeled: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        eventType:
+          type: string
+        aggregationType:
+          type: string
+          description: Aggregation applied to matching events, for example COUNT or SUM.
+        aggregationProperty:
+          type: string
     Error:
       type: object
       description: Error envelope (modeled).
@@ -167,31 +183,15 @@ components:
         properties:
           id:
             type: string
-    UsageMetric:
-      type: object
-      description: Usage metric aggregation definition (modeled).
-      x-modeled: true
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        eventType:
-          type: string
-        aggregationType:
-          type: string
-          description: Aggregation applied to matching events, for example COUNT or SUM.
-        aggregationProperty:
-          type: string
   responses:
-    ValidationError:
-      description: The request payload failed validation.
+    Unauthorized:
+      description: Missing or invalid Basic auth credentials.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Basic auth credentials.
+    ValidationError:
+      description: The request payload failed validation.
       content:
         application/json:
           schema:
