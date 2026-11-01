@@ -1,4 +1,4 @@
-# Sequence (sequence-hq)
+# Sequence
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,173 +64,136 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sequence is a usage-based billing, pricing, and revenue orchestration platform for B2B SaaS and other recurring-revenue businesses. It turns product usage and negotiated contract terms into automated billing schedules, invoices, credit notes, and quotes, backed by a metering engine for usage events and usage metrics, plus revenue recognition and integrations to ERP/CRM, tax, and payment providers.
+Sequence is a usage-based billing, pricing, and revenue orchestration platform for B2B SaaS and other recurring-revenue businesses. It turns product usage and negotiated contract terms into automated billing schedules, invoices, credit notes, and quotes, backed by a metering engine for usage events and usage metrics, plus revenue recognition and integrations to ERP/CRM, tax, and payment providers. The REST API (production base https://eu.sequencehq.com) uses HTTP Basic authentication with a Client ID and Client Secret, date-based API versioning (for example sequence-version 2024-07-30), and signed webhooks for event notifications. A Sandbox environment (https://sandbox.sequencehq.com) mirrors production for testing.
 
-## Access Model (read this first)
+**Areas:** Billing · Usage-Based Billing · Revenue Recognition · Metering · Invoicing · Pricing · Revenue Orchestration · FinOps
 
-- **Real, documented REST API.** Sequence publishes a resource-based REST API at `https://docs.sequencehq.com` designed "similar in spirit to Stripe's."
-- **Base host:** `https://eu.sequencehq.com` (Production, EU). A **Sandbox** environment mirrors it at `https://sandbox.sequencehq.com`. Usage ingestion is served under the `/api/` prefix (`POST /api/usage-events`); most resource operations are at the host root (`/customers`, `/invoices`, ...).
-- **Authentication:** HTTP **Basic auth** — Client ID (username) and Client Secret (password), created in the Sequence Dashboard (the secret is shown once). Not a Bearer token.
-- **Versioning:** date-based, selected with the `sequence-version` header (for example `2024-07-30`) or the `latest` alias.
-- **Events:** outbound **webhooks** (signed HTTP POST callbacks, `Sequence-Signature` HMAC-SHA256). **No WebSocket / `wss://` API is documented.**
-- **Honesty note:** the following operations were confirmed directly against the live API reference (host + path): `GET /customers`, `POST /api/usage-events`, `GET /billing-schedules`, `GET /invoices`, `GET /products`. Every other operation in the OpenAPI and collections here is a **real, documented operation** whose exact path spelling and request/response schema are **modeled** and flagged with `x-modeled: true`. Verify payloads against `docs.sequencehq.com` before production use.
+## Sequence on APIs.io
 
-> Disambiguation: this is **Sequence the billing/revenue platform** at sequencehq.com — **not** the web3 wallet "Sequence" (sequence.xyz / 0xsequence) and **not** the personal-finance money-routing app at getsequence.io.
+Everything profiled for Sequence is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sequence-hq/](https://apis.io/providers/sequence-hq/)** — or go straight to one of the APIs or properties below.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sequence-hq/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sequence-hq/refs/heads/main/apis.yml)
+### APIs (6)
 
-## Tags
+- [Sequence Billing Schedules API](https://apis.io/apis/sequence-hq/sequence-hq-billing-schedules-api/) — Recurring contract terms that generate invoices.
+- [Sequence Customers API](https://apis.io/apis/sequence-hq/sequence-hq-customers-api/) — Billable customer entities, contacts, and aliases.
+- [Sequence Invoices API](https://apis.io/apis/sequence-hq/sequence-hq-invoices-api/) — Invoice and credit note lifecycle.
+- [Sequence Products API](https://apis.io/apis/sequence-hq/sequence-hq-products-api/) — Product and price catalog.
+- [Sequence Quotes API](https://apis.io/apis/sequence-hq/sequence-hq-quotes-api/) — Quotes and quote analytics.
+- [Sequence Usage API](https://apis.io/apis/sequence-hq/sequence-hq-usage-api/) — Usage event ingestion, usage metrics, and seats.
 
-- Billing
-- Usage-Based Billing
-- Revenue Recognition
-- Metering
-- Invoicing
-- Pricing
-- Revenue Orchestration
-- FinOps
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+#### MCP servers (1)
 
-## APIs
+Model Context Protocol servers that expose the API to agents.
 
-### Sequence Customers API
+- [sequence-hq](https://apis.io/servers/sequence-hq/sequence-hq/)
 
-Create, retrieve, update, archive, and list customers, along with their contacts, customer aliases (external IDs used to attribute usage), and customer organizations. Customers are the billable entities that billing schedules, invoices, and usage events attach to.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/customer/list-customers](https://docs.sequencehq.com/reference/latest/customer/list-customers)
-- **Base URL:** `https://eu.sequencehq.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Sequence Hq Agentic Access](https://apis.io/agentic-access/sequence-hq/sequence-hq-agentic-access/)
 
-- Customers
-- Contacts
-- Billing
+#### Collections (7)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://docs.sequencehq.com/reference/gettingStarted)
-- [API Reference](https://docs.sequencehq.com/reference/latest/customer/list-customers)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Sequence API](https://apis.io/collections/sequence-hq/open-sequence-hq/)
+- [Sequence Billing Schedules API](https://apis.io/collections/sequence-hq/open-sequence-hq-billing-schedules-api/)
+- [Sequence Billing Schedules Customers API](https://apis.io/collections/sequence-hq/open-sequence-hq-customers-api/)
+- [Sequence Billing Schedules Invoices API](https://apis.io/collections/sequence-hq/open-sequence-hq-invoices-api/)
+- [Sequence Billing Schedules Products API](https://apis.io/collections/sequence-hq/open-sequence-hq-products-api/)
+- [Sequence Billing Schedules Quotes API](https://apis.io/collections/sequence-hq/open-sequence-hq-quotes-api/)
+- [Sequence Billing Schedules Usage API](https://apis.io/collections/sequence-hq/open-sequence-hq-usage-api/)
 
-### Sequence Usage & Metering API
+#### Security (2)
 
-Ingest usage events (`POST /api/usage-events`) keyed by `customerAlias` and `eventType`, define and manage usage metrics that aggregate those events, calculate a metric for a customer over a timeframe, and manage seat metrics and seat events for seat-based billing. This is the metering foundation for usage-based pricing, with a higher dedicated rate limit for ingestion.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event](https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event)
-- **Base URL:** `https://eu.sequencehq.com`
+- [Sequence Hq Authentication](https://apis.io/security/sequence-hq/sequence-hq-authentication/)
+- [Sequence Hq Domain Security](https://apis.io/security/sequence-hq/sequence-hq-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Usage-Based Billing
-- Metering
-- Events
+Published plans, tiers and prices.
 
-#### Properties
+- [Sequence Hq Plans Pricing](https://apis.io/plans/sequence-hq/sequence-hq-plans-pricing/)
 
-- [API Reference](https://docs.sequencehq.com/reference/latest/usage/create-a-new-usage-event)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Sequence Billing Schedules API
+Published request limits.
 
-Create, activate, archive, duplicate, retrieve, update, and list billing schedules — the recurring contract terms that translate a customer's negotiated pricing into automatically generated invoices over time. Includes tax validation on a billing schedule.
+- [Sequence Hq Rate Limits](https://apis.io/rate-limits/sequence-hq/sequence-hq-rate-limits/)
 
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules](https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules)
-- **Base URL:** `https://eu.sequencehq.com`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Billing
-- Subscriptions
-- Contracts
+- [Sequence Hq Finops](https://apis.io/finops/sequence-hq/sequence-hq-finops/)
 
-#### Properties
+## Where to find this API
 
-- [API Reference](https://docs.sequencehq.com/reference/latest/billing/list-all-billing-schedules)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Sequence Invoices & Credit Notes API
-
-Manage the accounts-receivable lifecycle — create, retrieve, update, patch, finalize, send, void, and delete invoices, manage line items and line item groups, download invoice PDFs, and issue credit notes against invoices. Covers draft-to-sent transitions, payment reminders, and payment status updates.
-
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices](https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices)
-- **Base URL:** `https://eu.sequencehq.com`
-
-#### Tags
-
-- Invoicing
-- Credit Notes
-- Accounts Receivable
-
-#### Properties
-
-- [API Reference](https://docs.sequencehq.com/reference/latest/invoices/list-all-invoices)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Sequence Products & Prices API
-
-Manage the product and pricing catalog — create, retrieve, update, and archive products; create, retrieve, update, and delete prices; and manage reusable list prices. Pricing models support flat, per-unit, tiered, and usage-based structures that feed billing schedules and quotes.
-
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/product/list-all-products](https://docs.sequencehq.com/reference/latest/product/list-all-products)
-- **Base URL:** `https://eu.sequencehq.com`
-
-#### Tags
-
-- Pricing
-- Products
-- Catalog
-
-#### Properties
-
-- [API Reference](https://docs.sequencehq.com/reference/latest/product/list-all-products)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Sequence Quotes API
-
-List quotes, retrieve quote analytics, and download quote PDFs. Quotes capture negotiated deal terms (products, prices, discounts) that, once signed and accepted, convert into billing schedules — the quote-to-revenue path for sales-led usage-based businesses.
-
-- **Human URL:** [https://docs.sequencehq.com/reference/latest/quote/list-quotes](https://docs.sequencehq.com/reference/latest/quote/list-quotes)
-- **Base URL:** `https://eu.sequencehq.com`
-
-#### Tags
-
-- Quotes
-- CPQ
-- Revenue Orchestration
-
-#### Properties
-
-- [API Reference](https://docs.sequencehq.com/reference/latest/quote/list-quotes)
-- [OpenAPI](openapi/sequence-hq-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sequence-hq.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sequence-hq.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Domain Security](security/sequence-hq-domain-security.yml)
-- [Authentication](authentication/sequence-hq-authentication.yml)
-- [GitHub Organization](https://github.com/sequencehq)
-- [LinkedIn](https://www.linkedin.com/company/sequence-hq)
 - [Website](https://www.sequencehq.com)
 - [Documentation](https://docs.sequencehq.com)
-- [Plans](plans/sequence-hq-plans-pricing.yml)
-- [Rate Limits](rate-limits/sequence-hq-rate-limits.yml)
-- [Fin Ops](finops/sequence-hq-finops.yml)
+- [Blog](https://www.sequencehq.com/blog)
+- [GitHub](https://github.com/sequencehq)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 14.7** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 42.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sequence-hq/](https://apis.io/providers/sequence-hq/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sequence: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sequence-hq/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
